@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <!-- including axios file in frontend -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>delete page</title>
+    <style>
+        body{
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: linear-gradient(Blue,lightBlue,yellow);
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size:auto;
+        }
+        form{
+            margin-top: 150px ;
+            text-align: center;
+            border: 1px solid brown;
+            height: 50vh;
+            width: 60vw;
+            background-color:honeydew;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input{
+            height: 30px;
+            width: 300px;
+            padding: 0px 15px;
+            font-size: 16px;
+            border-radius: 12px;
+        }
+
+        label{
+            font-size: 25px;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+
+        h2{
+            font-size: 40px;
+            margin-bottom: 100px;
+        }
+
+        .box{
+            display: flex;
+            align-items: center;
+            text-align: center;
+            gap: 40px;
+            justify-content: space-between;
+        }
+
+        .submit-btn{
+            height: 30px;
+            width: 300px;
+            margin: 60px 0px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            box-shadow: 2px 2px 3px brown;
+            transition: all 0.3s linear;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover{
+            background-color: brown;
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+
+    <form action="">
+
+        <h2> Delete Student </h2>
+
+        <div class="box">
+            <label for="rollno"> Enter Roll Number : </label>
+            <input type="text" name="rollno" id="rollno">
+        </div>
+
+
+        <button type="submit" class="submit-btn"> Submit </button>
+
+        <a href="index.html"> Go Back To Main Page </a>
+
+    </form>
+
+    <script>
+
+        let input = document.querySelector("#rollno") ;
+
+        let btn = document.querySelector(".submit-btn") ;
+
+        btn.addEventListener('click' , async(event)=>{
+            event.preventDefault() ;
+
+            // delete request through axios
+            try{
+                let val = input.value ;
+
+                if(val == ''){
+                    alert("Please enter roll Number") ;
+                    return ;
+                } ;
+
+                try{
+                    let response = await axios.delete(`http://localhost:3000/delete/${val}`);
+                    console.log(response.data) ;
+                    alert(response.data.message) ;
+                }
+                catch(err){
+                    alert("Not Found!!") ;
+                    return ;
+                }
+            }
+            catch(err){
+                console.log("Error in deleting the student") ;
+            }
+
+        })
+
+    </script>
+
+</body>
+</html>

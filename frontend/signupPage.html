@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- including axios file in frontend -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>add page</title>
+    <style>
+        body {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: radial-gradient(blue, lightBlue, black);
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: auto;
+        }
+        
+        form {
+            margin-top: 150px;
+            text-align: center;
+            border: 1px solid brown;
+            height: 70vh;
+            width: 60vw;
+            background-color: whitesmoke;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input {
+            height: 30px;
+            width: 300px;
+            padding: 0px 15px;
+            font-size: 16px;
+            border-radius: 6px;
+        }
+
+        label {
+            font-size: 25px;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+
+        h2 {
+            font-size: 40px;
+            margin-bottom: 100px;
+        }
+
+        .box {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            gap: 40px;
+            justify-content: space-between;
+        }
+
+        .submit-btn {
+            height: 30px;
+            width: 300px;
+            margin: 60px 0px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            box-shadow: 2px 2px 3px brown;
+            transition: all 0.3s linear;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background-color: brown;
+            color: white;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        p{
+            font-size: 20px;
+        }
+
+        a{
+            color: red;
+            text-decoration: none;
+        }
+        a:hover{
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <form action="">
+
+        <h2> Sign Up !!! </h2>
+
+        <div class="container">
+            
+            <div class="box">
+                <label for="companyName"> Enter Student Name : </label>
+                <input type="text" name="companyName" id="companyName">
+            </div>
+
+
+            <div class="box">
+                <label for="code"> Enter Student Code : </label>
+                <input type="text" name="code" id="code">
+            </div>
+
+            <div class="box">
+                <label for="email"> Enter Student Email : </label>
+                <input type="text" name="email" id="email">
+            </div>
+
+        </div>
+
+
+
+        <button type="submit" class="submit-btn"> Sign Up </button>
+
+        <p>Already a existing User ?  <a href="loginPage.html"> let's login Now  </a>  </p>
+
+    </form>
+
+
+
+    <script>
+
+        let company = document.querySelector("#companyName");
+        let code = document.querySelector("#code");
+        let emailInput = document.querySelector("#email");
+    
+
+        let btn = document.querySelector(".submit-btn");
+
+        btn.addEventListener('click', async (event) => {
+            event.preventDefault();
+
+            // login request through axios
+            try {
+
+                let companyCode = code.value ;
+                let companyName = company.value ;
+                let email = emailInput.value;
+
+
+                if (companyCode === '' || companyCode === '' || email === '') {
+                    alert("Please Enter Details Carefully Code !!");
+                    return;
+                };
+
+
+                try {
+                    let response = await axios.post(`http://localhost:3000/signup`,{
+                        companyName: companyName,
+                        companyCode: companyCode,
+                        email:email,
+                    });
+
+                    console.log(response.data);
+                    const data = response.data ;
+
+                        alert(data.message) ;
+                    
+                }
+                catch (err) {
+                    console.log(err.response.data) ;
+                    alert(err.response.data.message);
+                    return;
+                }
+            }
+            catch (err) {
+                console.log("Error in finding this company");
+            }
+
+        })
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,212 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- including axios file in frontend -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Login page</title>
+
+    <style>
+        html {
+            height: 100%;
+            width: 100%;
+        }
+
+        .container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        body {
+            background-image: url('./images/image.jpg');
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        #form-body {
+            background-color: #ffffff; /* White background */
+            width: 15cm;
+            margin: auto;
+            padding: 25px;
+            box-sizing: border-box;
+            border-radius: 5px;
+            position: relative;
+            bottom: 30px;
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+            }
+
+        input {
+            padding: 10px;
+            font-size: 15px;
+            box-sizing: border-box;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            height: 1cm;
+            width: 100%;
+            margin-top: 6px;
+        }
+
+        label {
+            font-size: 18px;
+            color: #333; /* Dark gray text */
+        }
+
+        label,
+        input {
+            font-family: sans-serif;
+        }
+
+        button {
+            font-size: 15px;
+            margin-top: 1.5rem;
+            cursor: pointer;
+            background-color: #3498db; /* Blue button */
+            color: white;
+            border: none;
+            padding: 12px 10rem;
+            border-radius: 4px;
+            transition: background-color 0.3s ease; /* Smooth hover transition */
+        }
+
+        button:hover {
+            background-color: #2980b9; /* Darker blue on hover */
+        }
+
+        input:focus {
+            outline: 2px solid #3498db; /* Blue outline on focus */
+        }
+
+        body{
+            background-image: url(https://i.pinimg.com/736x/27/d4/ec/27d4ec1f4267ccc814a765d5e7427899.jpg);            
+        background-repeat: no-repeat;
+        background-size: 50%;
+        background-attachment: fixed;
+        background-color: #F4F4F6;
+        }
+        .form {
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            font-family: 'Times New Roman', Times, serif;
+            color: #333;
+            font-size: 30px;
+            letter-spacing: 5px;
+            margin-top: 7rem;
+            gap: 12px;
+        }
+
+        .btn-container {
+            margin-right: auto;
+            margin-left: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        a {
+            color: #3498db; /* Blue link */
+            text-decoration: none;
+        }
+
+        p {
+            margin-top: 3rem;
+            color: #666; /* Dark gray text */
+        }
+
+        a:hover {
+            color: #e74c3c; /* Red on hover */
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <form>
+            <div id="form-body">
+            <h1> LOGIN </h1>
+            <h3> ALREADY REGISTERED? </h3>
+                <label for="email">Enter Student Email :</label>
+                <br>
+                <input type="email" name="email" id="email" placeholder="abc@gmail.com">
+
+                <br>
+                <br>
+
+                <label for="code"> Enter Student Code : </label>
+                <br>
+                <input type="text" id="code" name="code" placeholder="Student Code...">
+
+                <br>
+
+                <div class="btn-container">
+                    <button type="submit" class="submit-btn"> LOGIN </button>
+
+                    <p>Not an existing User ? <a href="/signup"> let's signup here!! </a> </p>
+
+                </div>
+
+            </div>
+        </form>
+
+    </div>
+    <script>
+      let code = document.querySelector("#code");
+        let emailInput = document.querySelector("#email") ;
+
+        let btn = document.querySelector(".submit-btn");
+
+
+        btn.addEventListener('click', async (event)=>{
+            event.preventDefault();
+
+            // login request through axios
+            try {
+
+                let companyCode = code.value ;
+                let email = emailInput.value ;
+
+                
+                if (companyCode == '' || email == '') {
+                    alert("Please Enter Details Code !!");
+                    return;
+                };
+
+                try {
+                    let response = await axios.post(`http://localhost:3000/login/`,{
+                
+                        companyCode:companyCode,
+                        email:email,
+                    });
+
+                    console.log(response.data);
+                    let data = response.data ;
+
+                    alert(data.message) ;
+                    window.location.href="http://localhost:3000/index";
+                }
+                catch (err) {
+                    console.log(err.response.data) ;
+                    alert(err.response.data.message);
+                    return;
+                }
+            }
+            catch (err) {
+                console.log("Error in finding this company");
+            }
+        })
+    </script>
+
+</body>
+
+</html>
+
+
